@@ -12,6 +12,9 @@ typedef struct BinaryTreeNode
     char val;
 } node;
 
+node* nodeInit(node* left,node* right,char val);
+node* binaryTreeBuild(string& s);
+
 int main()
 {
     int arg;
@@ -44,4 +47,29 @@ int main()
             break;
         }
     } while (arg);
+}
+
+node* nodeInit(node* left,node* right,char val)
+{
+    node* ret=(node*)malloc(sizeof(node));
+    ret->left=left;
+    ret->right=right;
+    ret->val=val;
+    return ret;
+}
+
+node* binaryTreeBuild(string& s,int* idx)
+{
+    if(*idx>=s.length())
+        return NULL;
+    char val=s[*idx];
+    *idx++;
+    if(s[*idx]!='*')
+    {
+        node* ret=nodeInit(NULL,NULL,val);
+        ret->left=binaryTreeBuild(s,idx);
+        ret->right=binaryTreeBuild(s,idx);
+        return ret;
+    }
+    return NULL;
 }
