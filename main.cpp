@@ -5,6 +5,13 @@
 
 using namespace std;
 
+typedef struct BinaryTreeNode
+{
+    struct BinaryTreeNode *left;
+    struct BinaryTreeNode *right;
+    char val;
+} node;
+
 int main()
 {
     int arg;
