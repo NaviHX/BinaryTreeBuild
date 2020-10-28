@@ -12,8 +12,11 @@ typedef struct BinaryTreeNode
     char val;
 } node;
 
-node* nodeInit(node* left,node* right,char val);
-node* binaryTreeBuild(string& s);
+node *nodeInit(node *left, node *right, char val);
+node *binaryTreeBuild(string &s, int *idx);
+void binaryTreeFree(node *root);
+void test();
+void testPrint(node *root);
 
 int main()
 {
@@ -39,6 +42,10 @@ int main()
                 << "输出广义表表示的二叉树结构\n"
                 << "广义表每一层有三个元素,第一个元素为当前的节点,第二第三分别为左右子树\n";
             break;
+        case 3:
+            cout << "测试:";
+            test();
+            break;
         case 0:
             cout << "感谢使用\n";
             break;
@@ -49,27 +56,53 @@ int main()
     } while (arg);
 }
 
-node* nodeInit(node* left,node* right,char val)
+node *nodeInit(node *left, node *right, char val)
 {
-    node* ret=(node*)malloc(sizeof(node));
-    ret->left=left;
-    ret->right=right;
-    ret->val=val;
+    node *ret = (node *)malloc(sizeof(node));
+    ret->left = left;
+    ret->right = right;
+    ret->val = val;
     return ret;
 }
 
-node* binaryTreeBuild(string& s,int* idx)
+node *binaryTreeBuild(string &s, int *idx)
 {
-    if(*idx>=s.length())
+    if (*idx >= s.length())
         return NULL;
-    char val=s[*idx];
-    *idx++;
-    if(s[*idx]!='*')
+    char val = s[*idx];
+    (*idx)++;
+    if (val != '*')
     {
-        node* ret=nodeInit(NULL,NULL,val);
-        ret->left=binaryTreeBuild(s,idx);
-        ret->right=binaryTreeBuild(s,idx);
+        node *ret = nodeInit(NULL, NULL, val);
+        ret->left = binaryTreeBuild(s, idx);
+        ret->right = binaryTreeBuild(s, idx);
         return ret;
     }
     return NULL;
+}
+
+void binaryTreeFree(node *root)
+{
+    if (!root)
+        return;
+    binaryTreeFree(root->left);
+    binaryTreeFree(root->right);
+    free(root);
+}
+
+void test()
+{
+    string s = "abc**d**e**";
+    int idx = 0;
+    node *tree = binaryTreeBuild(s, &idx);
+    testPrint(tree);
+}
+
+void testPrint(node *root)
+{
+    if (!root)
+        return;
+    testPrint(root->left);
+    cout << root->val;
+    testPrint(root->right);
 }
