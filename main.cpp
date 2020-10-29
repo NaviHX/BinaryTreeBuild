@@ -94,7 +94,9 @@ void binaryTreeFree(node *root)
 void binaryTreePrint(node *root)
 {
     int level = getBinaryTreeDepth(root), count = 0, curLevel = 1, levelSize = 1, sumSize = 1;
+    int loc = 0;
     queue<node *> q;
+    queue<int> qloc;
     q.push(root);
     while (curLevel <= level)
     {
@@ -111,17 +113,29 @@ void binaryTreePrint(node *root)
                 cout << " ";
             for (int i = 0; i < dis - 1; i++)
                 cout << " ";
+            loc += 2 * dis;
         }
         else
         {
             q.push(temp->left);
             q.push(temp->right);
+            if (temp->left)
+                qloc.push(loc);
             if (temp->right)
+            {
                 for (int i = 0; i < dis; i++)
+                {
                     cout << "_";
+                    loc++;
+                }
+                qloc.push(loc);
+            }
             else
                 for (int i = 0; i < dis; i++)
+                {
                     cout << " ";
+                    loc++;
+                }
             for (int i = 0; i < dis - 1; i++)
                 cout << " ";
         }
@@ -131,6 +145,22 @@ void binaryTreePrint(node *root)
             sumSize += levelSize;
             curLevel++;
             cout << '\n';
+            loc = 0;
+            int i = 0;
+            while (!qloc.empty())
+            {
+                if (i == qloc.front())
+                {
+                    cout << "|";
+                    qloc.pop();
+                }
+                else
+                {
+                    cout << " ";
+                }
+                i++;
+            }
+            cout << "\n";
         }
     }
 }
