@@ -24,6 +24,9 @@ void testPrint(node *root);
 int main()
 {
     int arg;
+    string s;
+    node *root = NULL;
+    int idx = 0;
     cout
         << "可以选择的功能选项:\n"
         << "1.输入先序遍历序列转二叉树\n"
@@ -32,11 +35,17 @@ int main()
     do
     {
         cout << "\n请输入功能选项:";
+        idx = 0;
+        root = NULL;
         cin >> arg;
         switch (arg)
         {
         case 1:
-            /* work */
+            cout << "请输入二叉树的先序序列:";
+            cin >> s;
+            root = binaryTreeBuild(s, &idx);
+            binaryTreePrint(root);
+            binaryTreeFree(root);
             break;
 
         case 2:
@@ -120,7 +129,10 @@ void binaryTreePrint(node *root)
             q.push(temp->left);
             q.push(temp->right);
             if (temp->left)
+            {
                 qloc.push(loc);
+
+            } 
             if (temp->right)
             {
                 for (int i = 0; i < dis; i++)
@@ -137,7 +149,11 @@ void binaryTreePrint(node *root)
                     loc++;
                 }
             for (int i = 0; i < dis - 1; i++)
+            {
                 cout << " ";
+                loc++;
+            }
+            loc++;
         }
         if (count == sumSize)
         {
@@ -174,7 +190,7 @@ int getBinaryTreeDepth(node *root)
 
 void test()
 {
-    string s = "abc**d**e**";
+    string s = "abc***d*e**";
     int idx = 0;
     node *tree = binaryTreeBuild(s, &idx);
     binaryTreePrint(tree);
