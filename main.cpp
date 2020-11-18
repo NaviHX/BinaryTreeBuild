@@ -6,11 +6,11 @@
 
 using namespace std;
 
-typedef struct BinaryTreeNode
+typedef struct BinaryTreeNode //二叉树节点
 {
-    struct BinaryTreeNode *left;
-    struct BinaryTreeNode *right;
-    char val;
+    struct BinaryTreeNode *left;  //左子节点
+    struct BinaryTreeNode *right; //右子节点
+    char val;                     //权值
 } node;
 
 node *nodeInit(node *left, node *right, char val);
@@ -139,8 +139,7 @@ void binaryTreePrint(node *root)
             if (temp->left)
             {
                 qloc.push(loc);
-
-            } 
+            }
             if (temp->right)
             {
                 for (int i = 0; i < dis; i++)
